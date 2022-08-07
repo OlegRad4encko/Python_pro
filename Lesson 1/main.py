@@ -48,10 +48,10 @@ class Customer:
 
 
 class Order:
-    products_list = []
 
     def __init__(self, customer):
         self.owner = customer
+        self.products_list = []
 
     def add_product(self, product):
         self.products_list.append(product)
@@ -73,6 +73,9 @@ class Order:
             tmp += f'Price: {self.products_list[i]["price"]}\n'
         tmp += f'===================== Full cost of the order: {self.get_final_price()}\n'
         return tmp
+
+    def get_count(self):
+        return len(self.products_list)
 
 
 products = [
@@ -137,7 +140,10 @@ print()
 
 for i in range(random.randint(5, 10)):
     order_list.append(Order(customers_list[random.randint(0, len(customers_list) - 1)].get_customer_data()))
-    order_list[i].add_product(products_list[random.randint(0, len(products_list) - 1)].get_product_data())
+
+for i in range(len(order_list)):
+    for j in range (0,3):
+        order_list[i].add_product(products_list[random.randint(0, len(products_list) - 1)].get_product_data())
 
 for i in order_list:
     print(i)
