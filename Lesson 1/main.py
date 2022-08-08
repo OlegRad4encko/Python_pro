@@ -52,14 +52,19 @@ class Order:
     def __init__(self, customer):
         self.owner = customer
         self.products_list = []
+        self.product_name_list = []
+        self.product_price_list = []
+        self.product_size_list = []
 
     def add_product(self, product):
-        self.products_list.append(product)
+        self.product_name_list.append(product["description"])
+        self.product_price_list.append(product["price"])
+        self.product_size_list.append(product["size_of_product"])
 
     def get_final_price(self):
         final_price = 0
-        for i in range(len(self.products_list)):
-            final_price += self.products_list[i]["price"]
+        for i in range(len(self.product_price_list)):
+            final_price += self.product_price_list[i]
         return final_price
 
     def __str__(self):
@@ -67,10 +72,10 @@ class Order:
         tmp += f'Customer address: {self.owner["address"]}\n'
         tmp += f'Customer phone number: {self.owner["phone_number"]}\n'
         tmp += "=============== Order list ===============\n"
-        for i in range(len(self.products_list)):
-            tmp += f'Product name: {self.products_list[i]["description"]},\t'
-            tmp += f'Size: {self.products_list[i]["size_of_product"]},\t'
-            tmp += f'Price: {self.products_list[i]["price"]}\n'
+        for i in range(len(self.product_name_list)):
+            tmp += f'Product name: {self.product_name_list[i]},\t'
+            tmp += f'Size: {self.product_size_list[i]},\t'
+            tmp += f'Price: {self.product_price_list[i]}\n'
         tmp += f'===================== Full cost of the order: {self.get_final_price()}\n'
         return tmp
 
@@ -131,19 +136,19 @@ customers = [
 products_list = []
 customers_list = []
 order_list = []
-for i in range(len(products)):
-    products_list.append(Product(products[i]))
-for i in range(len(customers)):
-    customers_list.append(Customer(customers[i]))
+for element in range(len(products)):
+    products_list.append(Product(products[element]))
+for element in range(len(customers)):
+    customers_list.append(Customer(customers[element]))
 
 print()
 
-for i in range(random.randint(5, 10)):
+for element in range(random.randint(5, 10)):
     order_list.append(Order(customers_list[random.randint(0, len(customers_list) - 1)].get_customer_data()))
 
-for i in range(len(order_list)):
-    for j in range (0,3):
-        order_list[i].add_product(products_list[random.randint(0, len(products_list) - 1)].get_product_data())
+for element in range(len(order_list)):
+    for j in range(0, 3):
+        order_list[element].add_product(products_list[random.randint(0, len(products_list) - 1)].get_product_data())
 
-for i in order_list:
-    print(i)
+for element in order_list:
+    print(element)
