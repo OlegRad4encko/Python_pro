@@ -1,10 +1,55 @@
 from __future__ import annotations
+import env
 
 import random
 
 
 def random_record_book_number() -> int:
     return random.randint(100000000, 999999999)
+
+
+class MaxStudentError(Exception):
+
+    def __init__(self, gr_max_student: int):
+        super().__init__()
+        self.gr_max_student = gr_max_student
+
+    def __str__(self) -> str:
+        return f' В группе было {self.gr_max_student} мест.'
+
+
+class StudentIsAlreadyInTheGroupError(Exception):
+
+    def __init__(self, student: Student, gr_f_name: str):
+        super().__init__()
+        self.student = student
+        self.gr_f_name = gr_f_name
+
+    def __str__(self) -> str:
+        return f'Студент \n{self.student} --- уже находится в этой ({self.gr_f_name}) группе\n\n'
+
+
+class DeleteStudentFromTheGroupError(Exception):
+
+    def __init__(self, student: Student, gr_f_name: str):
+        super().__init__()
+        self.student = student
+        self.gr_f_name = gr_f_name
+
+    def __str__(self) -> str:
+        rez = f'Студента \n{self.student} --- нет в {self.gr_f_name} группе.'
+        rez += f' НЕЛЬЗЯ ОТЧИСЛИТЬ\n\n'
+        return rez
+
+
+class SearchStudentBySurnameError(Exception):
+    def __init__(self, surname: str, gr_f_name: str):
+        super().__init__()
+        self.surname = surname
+        self.gr_f_name = gr_f_name
+
+    def __str__(self) -> str:
+        return f'Студент c фамилией \n({self.surname}) не найден в группе {self.gr_f_name}.'
 
 
 class Human:
@@ -44,27 +89,30 @@ class Group:
         self.students = []
 
     def add_student(self, student: Student) -> int:
-        if len(self.students) == 10:
-            return 0
+        if len(self.students) == env.MAX_STUDENTS_IN_GROUP:
+            raise MaxStudentError(env.MAX_STUDENTS_IN_GROUP)
         if student in self.students:
-            return 1
+            raise StudentIsAlreadyInTheGroupError(student,
+                                                  f'{self.group_name}{self.group_number}')
         self.students.append(student)
-        return 2
+        return 1
 
     def delete_student(self, student: Student) -> int:
         if student in self.students:
             self.students.pop(self.students.index(student))
             return 1
-        return 0
+        raise DeleteStudentFromTheGroupError(student, f'{self.group_name}{self.group_number}')
 
     def search_student_by_surname(self, surname: str) -> int | Student:
         for item in self.students:
             if item.surname.lower() == surname.lower():
                 return item
-        return -1
+        raise SearchStudentBySurnameError(surname, f'{self.group_name}{self.group_number}')
 
     def __str__(self) -> str:
         result = f'Group: {self.group_name}{self.group_number}\n'
+        if not self.students:
+            return result + f'Empty\n\n'
         for index, item in enumerate(self.students):
             result += f'{self.students[index]}\n'
         return result
@@ -72,6 +120,7 @@ class Group:
 
 group = Group("KB-", "81-0")
 
+students = []
 x1 = Student("Oleh", "Radchenko", "11.07.2000", "01.09.2020", "30.07.2022")
 x2 = Student("Sergei", "Shargin", "12.07.2001", "01.09.2020", "30.07.2022")
 x3 = Student("Alina", "Grishenko", "13.07.2000", "01.09.2020", "30.07.2022")
@@ -84,29 +133,34 @@ x9 = Student("Andrey", "Kozachek", "19.07.2001", "01.09.2020", "30.07.2022")
 x10 = Student("Anton", "Petlenko", "20.07.2000", "01.09.2020", "30.07.2022")
 x11 = Student("Max", "Petlenko", "20.07.2000", "01.09.2020", "30.07.2022")
 
-group.add_student(x1)
-group.add_student(x2)
-group.add_student(x3)
-group.add_student(x4)
-group.add_student(x5)
+print(group)
+
+try:
+    group.add_student(x1)
+    group.add_student(x2)
+    group.add_student(x3)
+    group.add_student(x4)
+    group.add_student(x5)
+    group.add_student(x6)
+    group.add_student(x7)
+    group.add_student(x8)
+    group.add_student(x9)
+    group.add_student(x1)
+    group.add_student(x10)
+    group.add_student(x11)
+except (MaxStudentError, StudentIsAlreadyInTheGroupError) as err:
+    print(err)
 
 print(group)
 
-group.add_student(x6)
-group.add_student(x7)
-group.add_student(x8)
-group.add_student(x9)
-group.add_student(x1)
+try:
+    group.delete_student(x10)
+except DeleteStudentFromTheGroupError as err:
+    print(err)
 
 print(group)
 
-group.add_student(x10)
-group.add_student(x11)
-
-print(group)
-
-group.delete_student(x10)
-
-print(group)
-
-print(group.search_student_by_surname("Raiko"))
+try:
+    print(group.search_student_by_surname("Radchenko"))
+except () as err:
+    print(err)

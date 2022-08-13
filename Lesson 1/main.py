@@ -71,8 +71,6 @@ order_2.add_product(pr_1, 1)
 order_2.add_product(pr_2, 1)
 order_2.add_product(pr_3, 1)
 
-# print(order_1)
-print(order_1.customer)
-print(order_1.products)
-print(order_1.quantities)
-# print(order_2)
+print(order_1.total())
+
+
