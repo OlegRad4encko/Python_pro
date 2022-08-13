@@ -39,26 +39,27 @@ class Group():
 
     def add_student(self, student):
         if len(self.students) == 10:
-            print("Достигнут лимит студентов в группе, сформируйте еще одну группу.\n")
             return 0
         if student in self.students:
-            print("Такой студент уже есть в этой группе.\n")
-            return 0
+            return 1
         self.students.append(student)
-        return 0
+        return 2
 
     def delete_student(self, student):
-        print(f'Студент ({student}) отчислен \n')
-        self.students.pop(self.students.index(student))
+        if student in self.students:
+            self.students.pop(self.students.index(student))
+            return 1
         return 0
 
     def search_student_by_surname(self, surname):
-        result = f'Студент(ы) найден(ы):\n'
+        result = ""
         for index, item in enumerate(self.students):
             if str(self.students[index]).find(surname) == 0:
                 result += f'{self.students[index]}\n'
-        print(result)
-        return 0
+        if result:
+            return result
+        else:
+            return 0
 
     def __str__(self):
         result = f'Group: {self.group_name}{self.group_number}\n'
@@ -107,3 +108,9 @@ group.delete_student(x10)
 print(group)
 
 group.search_student_by_surname("Raiko")
+
+
+
+print("Достигнут лимит студентов в группе, сформируйте еще одну группу.\n")
+
+print("Такой студент уже есть в этой группе.\n")
