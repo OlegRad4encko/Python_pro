@@ -31,7 +31,7 @@ class Student(Human):
         return result
 
 
-class Group(Student):
+class Group():
     def __init__(self, group_name, group_number):
         self.group_name = group_name
         self.group_number = group_number
