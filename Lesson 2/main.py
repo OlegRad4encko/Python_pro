@@ -52,10 +52,10 @@ class Group():
         return 0
 
     def search_student_by_surname(self, surname):
-        result = ""
+        result = []
         for index, item in enumerate(self.students):
-            if str(self.students[index]).find(surname) == 0:
-                result += f'{self.students[index]}\n'
+            if not str(self.students[index]).find(surname) == -1:
+                result.append(self.students[index])
         if result:
             return result
         else:
@@ -107,10 +107,4 @@ group.delete_student(x10)
 
 print(group)
 
-group.search_student_by_surname("Raiko")
-
-
-
-print("Достигнут лимит студентов в группе, сформируйте еще одну группу.\n")
-
-print("Такой студент уже есть в этой группе.\n")
+print(group.search_student_by_surname("Raiko"))
