@@ -31,7 +31,7 @@ class Student(Human):
         return result
 
 
-class Group():
+class Group:
     def __init__(self, group_name, group_number):
         self.group_name = group_name
         self.group_number = group_number
@@ -52,14 +52,10 @@ class Group():
         return 0
 
     def search_student_by_surname(self, surname):
-        result = []
-        for index, item in enumerate(self.students):
-            if not str(self.students[index]).find(surname) == -1:
-                result.append(self.students[index])
-        if result:
-            return result
-        else:
-            return 0
+        for item in self.students:
+            if item.surname.lower() == surname.lower():
+                return item
+        return -1
 
     def __str__(self):
         result = f'Group: {self.group_name}{self.group_number}\n'
