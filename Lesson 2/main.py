@@ -108,4 +108,3 @@ group.delete_student(x10)
 print(group)
 
 group.search_student_by_surname("Raiko")
-
