@@ -8,36 +8,42 @@ def random_record_book_number() -> int:
 
 
 class Human:
-    def __init__(self, name, surname, birth_date):
+    def __init__(self, name: str,
+                 surname: str,
+                 birth_date: str) -> None:
         self.name = name
         self.surname = surname
         self.birth_date = birth_date
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.surname} {self.name[0]} [{self.birth_date}]'
 
 
 class Student(Human):
-    def __init__(self, name, surname, birth_date, start_of_studies, end_of_studies):
+    def __init__(self,
+                 name: str,
+                 surname: str,
+                 birth_date: str,
+                 start_of_studies: str,
+                 end_of_studies: str) -> None:
         super().__init__(name, surname, birth_date)
         self.record_book_number = random_record_book_number()
         self.start_of_studies = start_of_studies
         self.end_of_studies = end_of_studies
 
-
-    def __str__(self):
+    def __str__(self) -> str:
         result = f'{self.surname} {self.name[0]}.\t'
         result += f'[{self.start_of_studies}-{self.end_of_studies}] \t RBM: {self.record_book_number}'
         return result
 
 
 class Group:
-    def __init__(self, group_name, group_number):
+    def __init__(self, group_name: str, group_number: str) -> None:
         self.group_name = group_name
         self.group_number = group_number
         self.students = []
 
-    def add_student(self, student):
+    def add_student(self, student: Student) -> int:
         if len(self.students) == 10:
             return 0
         if student in self.students:
@@ -45,19 +51,19 @@ class Group:
         self.students.append(student)
         return 2
 
-    def delete_student(self, student):
+    def delete_student(self, student: Student) -> int:
         if student in self.students:
             self.students.pop(self.students.index(student))
             return 1
         return 0
 
-    def search_student_by_surname(self, surname):
+    def search_student_by_surname(self, surname: str) -> int | Student:
         for item in self.students:
             if item.surname.lower() == surname.lower():
                 return item
         return -1
 
-    def __str__(self):
+    def __str__(self) -> str:
         result = f'Group: {self.group_name}{self.group_number}\n'
         for index, item in enumerate(self.students):
             result += f'{self.students[index]}\n'
@@ -104,4 +110,3 @@ group.delete_student(x10)
 print(group)
 
 print(group.search_student_by_surname("Raiko"))
-
