@@ -8,7 +8,7 @@ class UserExcept(Exception):
 
 while True:
     try:
-        x = float(input("Input: "))
+        x = float(input("Введите цену: "))
         if x <= 0:
             raise UserExcept()
         break
