@@ -65,6 +65,7 @@ class Cart:
 
         return res
 
+
 products = [
     {
         "product_name": "banana",
@@ -82,12 +83,11 @@ products = [
 
 products_list = []
 
-try:
-    for elem in range(len(products)):
+for elem in range(len(products)):
+    try:
         products_list.append(Product(products[elem]["product_name"], products[elem]["product_price"]))
-except (ValueError, UserExcept) as err:
-    print(f'Opps:\n {err}')
-
+    except (ValueError, UserExcept) as err:
+        print(f'Opps:\n {err}')
 
 customer_1 = Customer('Ivan', 'Ivanov', '123456789')
 customer_2 = Customer('Ivan', 'Petrov', '223456789')
@@ -96,11 +96,10 @@ order_1 = Cart(customer_1)
 order_2 = Cart(customer_2)
 
 for elem in range(len(products_list)):
-    order_1.add_product(products_list[elem], random.randint(1,5))
-
+    order_1.add_product(products_list[elem], random.randint(1, 5))
 
 for elem in range(len(products_list)):
-    order_2.add_product(products_list[elem], random.randint(1,5))
+    order_2.add_product(products_list[elem], random.randint(1, 5))
 
 print(order_2)
 print(order_1.total())
