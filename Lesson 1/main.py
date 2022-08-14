@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import random
+
 
 class UserExcept(Exception):
     def __init__(self):
@@ -63,11 +65,26 @@ class Cart:
 
         return res
 
+products = [
+    {
+        "product_name": "banana",
+        "product_price": 20
+    },
+    {
+        "product_name": "apple",
+        "product_price": 21
+    },
+    {
+        "product_name": "orange",
+        "product_price": 0
+    }
+]
+
+products_list = []
 
 try:
-    pr_1 = Product('banana', 20)
-    pr_2 = Product('apple', 21)
-    pr_3 = Product('orange', 0)
+    for elem in range(len(products)):
+        products_list.append(Product(products[elem]["product_name"], products[elem]["product_price"]))
 except (ValueError, UserExcept) as err:
     print(f'Opps:\n {err}')
 
@@ -78,11 +95,12 @@ customer_2 = Customer('Ivan', 'Petrov', '223456789')
 order_1 = Cart(customer_1)
 order_2 = Cart(customer_2)
 
-order_1.add_product(pr_1, 2.5)
-order_1.add_product(pr_2, 3.)
-order_1.add_product(pr_1, 2)
-order_2.add_product(pr_1, 1)
-order_2.add_product(pr_2, 1)
-order_2.add_product(pr_3, 1)
+for elem in range(len(products_list)):
+    order_1.add_product(products_list[elem], random.randint(1,5))
 
+
+for elem in range(len(products_list)):
+    order_2.add_product(products_list[elem], random.randint(1,5))
+
+print(order_2)
 print(order_1.total())
