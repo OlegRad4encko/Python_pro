@@ -1,10 +1,20 @@
 from __future__ import annotations
 
 
+class UserExcept(Exception):
+    def __init__(self):
+        super().__init__()
+
+    def __str__(self):
+        return f'Цена продукта должна быть больше 0'
+
+
 class Product:
 
     def __init__(self, title: str, price: int | float):
         self.title = title
+        if price <= 0:
+            raise UserExcept()
         self.price = price
 
     def __str__(self):
@@ -54,9 +64,13 @@ class Cart:
         return res
 
 
-pr_1 = Product('banana', 20)
-pr_2 = Product('apple', 21)
-pr_3 = Product('orange', 22)
+try:
+    pr_1 = Product('banana', 20)
+    pr_2 = Product('apple', 21)
+    pr_3 = Product('orange', 0)
+except (ValueError, UserExcept) as err:
+    print(f'Opps:\n {err}')
+
 
 customer_1 = Customer('Ivan', 'Ivanov', '123456789')
 customer_2 = Customer('Ivan', 'Petrov', '223456789')
@@ -72,5 +86,3 @@ order_2.add_product(pr_2, 1)
 order_2.add_product(pr_3, 1)
 
 print(order_1.total())
-
-
