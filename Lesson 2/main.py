@@ -95,7 +95,6 @@ class Group:
             raise StudentIsAlreadyInTheGroupError(student,
                                                   f'{self.group_name}{self.group_number}')
         self.students.append(student)
-        return 1
 
     def delete_student(self, student: Student) -> int:
         if student in self.students:
