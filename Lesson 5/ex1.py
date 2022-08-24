@@ -33,30 +33,39 @@ class Rectangle:
         else:
             raise TypeError("одна сторона 1го прямоугольника должна быть равна 1 стороне 2го прямоугольника")
 
-    def __eq__(self, other):
+    def __eq__(self: Rectangle, other: Rectangle):
         if self.get_area() == other.get_area():
             return 1
         return 0
 
-    def __gt__(self, other):
+    def __gt__(self: Rectangle, other: Rectangle):
         if self.get_area() > other.get_area():
             return 1
         return 0
 
-    def __lt__(self, other):
+    def __lt__(self: Rectangle, other: Rectangle):
         if self.get_area() < other.get_area():
             return 1
         return 0
 
-    def __ne__(self, other):
+    def __ne__(self: Rectangle, other: Rectangle):
         if self.get_area() != other.get_area():
             return 1
         return 0
 
-    def __mul__(self, n):
-        if n <= 0:
+    def __mul__(self: Rectangle, other: int):
+        if not isinstance(other, int):
+            return NotImplemented
+        if other <= 0:
             raise TypeError("Нельзя умножить прямоугольник на число, которое меньше или равно 0")
-        self.length = self.length * n
+        self.length = self.length * other
+
+    def __rmul__(self: Rectangle, other: int):
+        if not isinstance(other, int):
+            return NotImplemented
+        if other <= 0:
+            raise TypeError("Нельзя умножить прямоугольник на число, которое меньше или равно 0")
+        self.length = self.length * other
 
 
 try:
@@ -75,7 +84,7 @@ except TypeError as err:
     print(err)
 
 try:
-    rect_1 * 3
+    3 * rect_1
     print(rect_1)
 except TypeError as err:
     print(err)
