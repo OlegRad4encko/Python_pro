@@ -1,6 +1,4 @@
 from __future__ import annotations
-import env
-
 
 import userErrors
 import student_module
