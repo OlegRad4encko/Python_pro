@@ -8,10 +8,11 @@
 
 from __future__ import annotations
 
+
 class Rectangle:
     def __init__(self, length: float, width: float):
         if length <= 0 or width <= 0:
-            raise TypeError("Одна из сторон меньше или равна 0!")
+            raise TypeError("One of the sides is less than or equal to 0!")
         self.length = length
         self.width = width
 
@@ -29,42 +30,34 @@ class Rectangle:
         if self.width == other.length:
             return Rectangle(other.length, (self.length + other.width))
         if self.width == other.width:
-            return Rectangle((self.length + other.length),self.width)
+            return Rectangle((self.length + other.length), self.width)
         else:
-            raise TypeError("одна сторона 1го прямоугольника должна быть равна 1 стороне 2го прямоугольника")
+            raise TypeError("one side of the 1st rectangle should be equal to 1 side of the 2nd rectangle")
 
     def __eq__(self: Rectangle, other: Rectangle):
-        if self.get_area() == other.get_area():
-            return 1
-        return 0
+        return self.get_area() == other.get_area()
 
     def __gt__(self: Rectangle, other: Rectangle):
-        if self.get_area() > other.get_area():
-            return 1
-        return 0
+        return self.get_area() > other.get_area()
 
     def __lt__(self: Rectangle, other: Rectangle):
-        if self.get_area() < other.get_area():
-            return 1
-        return 0
+        return self.get_area() < other.get_area()
 
     def __ne__(self: Rectangle, other: Rectangle):
-        if self.get_area() != other.get_area():
-            return 1
-        return 0
+        return self.get_area() != other.get_area()
 
     def __mul__(self: Rectangle, other: int):
         if not isinstance(other, int):
             return NotImplemented
         if other <= 0:
-            raise TypeError("Нельзя умножить прямоугольник на число, которое меньше или равно 0")
+            raise TypeError("You cannot multiply a rectangle by a number less than or equal to 0")
         self.length = self.length * other
 
     def __rmul__(self: Rectangle, other: int):
         if not isinstance(other, int):
             return NotImplemented
         if other <= 0:
-            raise TypeError("Нельзя умножить прямоугольник на число, которое меньше или равно 0")
+            raise TypeError("You cannot multiply a rectangle by a number less than or equal to 0")
         self.length = self.length * other
 
 
@@ -88,6 +81,3 @@ try:
     print(rect_1)
 except TypeError as err:
     print(err)
-
-
-

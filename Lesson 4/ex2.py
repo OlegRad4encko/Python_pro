@@ -7,7 +7,9 @@ from __future__ import annotations
 class ProperFraction:
     def __init__(self, numerator: int, denominator: int):
         if numerator >= denominator:
-            raise TypeError("Числитель должен быть меньше знаменателя\n")
+            raise TypeError("The numerator must be less than the denominator\n")
+        if denominator == 0:
+            raise ZeroDivisionError("The denominator must not be 0\n")
         self.numerator = numerator
         self.denominator = denominator
 
@@ -18,40 +20,22 @@ class ProperFraction:
         return f'{self.numerator}/{self.denominator}'
 
     def __eq__(self: ProperFraction, other: ProperFraction) -> bool:
-        if self.calculation_fraction() == other.calculation_fraction():
-            return True
-        else:
-            return False
+        return self.calculation_fraction() == other.calculation_fraction()
 
     def __ne__(self: ProperFraction, other: ProperFraction) -> bool:
-        if self.calculation_fraction() != other.calculation_fraction():
-            return True
-        else:
-            return False
+        return self.calculation_fraction() != other.calculation_fraction()
 
     def __gt__(self: ProperFraction, other: ProperFraction) -> bool:
-        if self.calculation_fraction() > other.calculation_fraction():
-            return True
-        else:
-            return False
+        return self.calculation_fraction() > other.calculation_fraction()
 
     def __lt__(self: ProperFraction, other: ProperFraction) -> bool:
-        if self.calculation_fraction() < other.calculation_fraction():
-            return True
-        else:
-            return False
+        return self.calculation_fraction() < other.calculation_fraction()
 
     def __ge__(self: ProperFraction, other: ProperFraction) -> bool:
-        if self.calculation_fraction() >= other.calculation_fraction():
-            return True
-        else:
-            return False
+        return self.calculation_fraction() >= other.calculation_fraction()
 
     def __le__(self: ProperFraction, other: ProperFraction) -> bool:
-        if self.calculation_fraction() <= other.calculation_fraction():
-            return True
-        else:
-            return False
+        return self.calculation_fraction() <= other.calculation_fraction()
 
     def common_denominator(self: ProperFraction, other: ProperFraction) -> int:
         i = other.numerator * 2
@@ -64,7 +48,7 @@ class ProperFraction:
         if self.denominator == other.denominator:
             return ProperFraction((self.numerator + other.numerator), self.denominator)
         common_d = self.common_denominator(other)
-        tmp = ((common_d / self.denominator) * self.numerator) + ((common_d / other.denominator) * other.numerator)
+        tmp = ((common_d // self.denominator) * self.numerator) + ((common_d // other.denominator) * other.numerator)
         return ProperFraction(tmp, common_d)
 
     def __sub__(self: ProperFraction, other: ProperFraction) -> ProperFraction:
@@ -72,7 +56,7 @@ class ProperFraction:
             return ProperFraction((self.numerator - other.numerator), self.denominator)
         else:
             common_d = self.common_denominator(other)
-            tmp = ((common_d / self.denominator) * self.numerator) - ((common_d / other.denominator) * other.numerator)
+            tmp = ((common_d // self.denominator) * self.numerator) - ((common_d // other.denominator) * other.numerator)
             return ProperFraction(tmp, common_d)
 
     def __mul__(self: ProperFraction, other: ProperFraction) -> ProperFraction:
@@ -80,10 +64,10 @@ class ProperFraction:
 
 
 try:
-    fr_1 = ProperFraction(2, 4)
+    fr_1 = ProperFraction(-1, 0)
     fr_2 = ProperFraction(3, 9)
     fr_3 = ProperFraction(2, 2)
-except TypeError as err:
+except (TypeError, ZeroDivisionError) as err:
     print(err)
 
-print(fr_1 * fr_2)
+print(fr_1 > fr_2)
