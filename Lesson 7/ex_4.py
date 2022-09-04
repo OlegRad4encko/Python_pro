@@ -8,7 +8,7 @@ def cube_nums_generator(n):
         yield start ** 3
         start += 1
 
+
 tmp = cube_nums_generator(10)
 for i in tmp:
     print(i)
-
