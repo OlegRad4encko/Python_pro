@@ -49,4 +49,6 @@ print("-----------------------")
 for pr in order_1:
     print(pr)
 
-# print(order_1[0])
+
+
+# print(order_1[1::1])
