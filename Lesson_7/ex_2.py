@@ -10,16 +10,23 @@ def my_range(*args) -> int:
         case 3:
             start, stop, step = args[0], args[1], args[2]
         case _:
-            raise TypeError
-    while start < stop:
-        yield start
-        start += step
+            raise TypeError()
+    if step == 0:
+        raise ValueError()
+    if start > stop and step > 0:
+        raise ValueError()
+    if stop > start and step < 0:
+        while stop > start:
+            yield stop
+            stop += step
+    else:
+        while start < stop:
+            yield start
+            start += step
 
 
-a = 1
-b = 7
-c = 1
 
-for i in my_range(2, 5, 1):
+
+for i in my_range(1, 5, -1):
     print(i)
 
