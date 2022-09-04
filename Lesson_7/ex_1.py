@@ -3,18 +3,13 @@
 # Генератор должен остановить свою работу или по достижению указанной
 # границы, или при передаче команды на завершение.
 
-import env
 
-LIMIT = env.LIMIT
-
-
-def geometrically_prog(n):
-    start = 1
-    while start <= LIMIT:
-        yield start ** n
-        start += 1
+def geometrically_prog(start, stop, step):
+    while start <= stop:
+        yield start
+        start *= step
 
 
-geom_tmp = geometrically_prog(8)
+geom_tmp = geometrically_prog(1, 100, 3)
 for item in geom_tmp:
     print(item)
