@@ -6,10 +6,16 @@
 
 def geometrically_prog(start, stop, step):
     while start <= stop:
-        yield start
+        tmp = yield start
+        if tmp and tmp.lower() == 'stop':
+            return None
         start *= step
 
 
-geom_tmp = geometrically_prog(1, 100, 3)
+geom_tmp = geometrically_prog(1, 1000, 2)
 for item in geom_tmp:
     print(item)
+    if item > 100:
+        geom_tmp.send('stop')
+
+
