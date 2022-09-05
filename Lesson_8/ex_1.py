@@ -5,18 +5,16 @@
 # членов последовательности (n). Генератор должен остановить свою работу
 # или по достижению n — го члена , или при передаче команды на завершение.
 
-def gen_func(start, count):
-    def my_seq(n):
-        return (n ** 2) + 5
+def gen_func(start, count, func):
 
     while start < count:
-        oops = yield my_seq(start)
+        oops = yield func(start)
         if oops and oops.lower() == 'stop':
             raise ValueError()
         start += 1
 
 
-x = gen_func(1, 10)
+x = gen_func(1, 10, lambda n: (n * n) - 5)
 for i in x:
     if i > 30:
         x.send('stop')
